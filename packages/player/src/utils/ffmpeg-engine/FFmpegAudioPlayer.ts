@@ -403,8 +403,9 @@ export class FFmpegAudioPlayer extends TypedEventTarget<FFmpegPlayerEventMap> {
 				// biome-ignore lint/suspicious/noExplicitAny: 兼容
 				window.AudioContext || (window as any).webkitAudioContext;
             const isAndroid = /Android/i.test(navigator.userAgent);
-			this.audioCtx = new AudioContextCtor();
+			this.audioCtx = new AudioContextCtor({
                 latencyHint: isAndroid ? 'playback' : 'interactive'
+            });
 
 			this.masterGain = this.audioCtx.createGain();
 			this.masterGain.gain.value = 0;
