@@ -82,7 +82,7 @@ export class FFmpegAudioPlayer extends TypedEventTarget<FFmpegPlayerEventMap> {
 	}
 	public get currentTime() {
 		if (!this.audioCtx) return 0;
-		const latency = this.audioCtx.baseLatency || 0; //计算playback模式的延迟
+		const latency = this.audioCtx.baseLatency || 0 + (this.audioCtx.outputLatency || 0); //计算playback模式可能会遇到的基础延迟和输出延迟
 		const wallDelta = this.audioCtx.currentTime - latency - this.anchorWallTime;
 		const currentPosition =
 			this.anchorSourceTime + wallDelta * this.currentTempo;
